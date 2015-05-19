@@ -2,8 +2,6 @@ class Deployment < ActiveRecord::Base
   after_create :record_to_statsd
   belongs_to :application
 
-  attr_accessible :version, :environment, :application, :application_id, :created_at
-
   validates_presence_of :version, :environment, :application_id
 
   scope :recent, lambda { order("created_at DESC").limit(25) }
@@ -38,6 +36,10 @@ class Deployment < ActiveRecord::Base
   end
 
   private
+
+    def deployment_params
+      params.require(:deployment).permit(:id, :version, :environment, :application, :application_id, :created_at)
+    end
 
     # Record the deployment to statsd and thence to graphite
     def record_to_statsd

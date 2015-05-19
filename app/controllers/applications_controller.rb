@@ -76,7 +76,7 @@ class ApplicationsController < ApplicationController
   end
 
   def create
-    @application = Application.new(params[:application])
+    @application = Application.new(application_params)
 
     if @application.valid? && @application.save
       redirect_to @application, flash: { notice: "Successfully created new application" }
@@ -87,7 +87,7 @@ class ApplicationsController < ApplicationController
   end
 
   def update
-    if @application.update_attributes(params[:application])
+    if @application.update_attributes(application_params)
       redirect_to @application, flash: { notice: "Successfully updated the application" }
     else
       redirect_to edit_application_path(@application), flash: { alert: "There are some problems with the application" }
@@ -95,7 +95,7 @@ class ApplicationsController < ApplicationController
   end
 
   def update_notes
-    if @application.update_attributes(params[:application])
+    if @application.update_attributes(application_params)
       redirect_to applications_path, flash: { notice: "Successfully updated notes" }
     else
       redirect_to applications_path, flash: { alert: "Failed to update notes" }
@@ -103,6 +103,10 @@ class ApplicationsController < ApplicationController
   end
 
   private
+    def application_params
+      params.require(:application).permit(:id, :name, :repo, :shortname, :status_notes, :domain, :archived, :task)
+    end
+    
     def find_application
       @application = Application.friendly.find(params[:id])
     end

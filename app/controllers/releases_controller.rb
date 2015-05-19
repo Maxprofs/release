@@ -21,7 +21,7 @@ class ReleasesController < ApplicationController
   end
 
   def create
-    @release = Release.new(params[:release])
+    @release = Release.new(release_params)
 
     if @release.valid? && @release.save_as(current_user)
       redirect_to @release, flash: { notice: "Successfully created new release" }
@@ -34,10 +34,15 @@ class ReleasesController < ApplicationController
   def update
     @release = Release.find(params[:id])
 
-    if @release.update_attributes(params[:release])
+    if @release.update_attributes(release_params)
       redirect_to @release, flash: { notice: "Successfully updated the release" }
     else
       redirect_to @release, flash: { alert: "There are some problems with the release" }
     end
   end
+
+  private
+    def release_params
+      params.permit(:id, :notes, :summary, :product_team_members, :additional_support_notes, :deploy_at, :application, :application_id)
+    end
 end
