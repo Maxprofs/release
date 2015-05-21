@@ -43,6 +43,21 @@ class ReleasesController < ApplicationController
 
   private
     def release_params
-      params.permit(:id, :notes, :summary, :product_team_members, :additional_support_notes, :deploy_at, :application, :application_id)
+      params.require(:release).permit(
+        :id,
+        :notes,
+        :summary,
+        :product_team_members,
+        :additional_support_notes,
+        :deploy_at,
+        tasks_attributes: [
+          :application_id,
+          :description,
+          :version,
+          :extended_support_required,
+          :additional_support_required,
+          :application_changes,
+        ],
+      )
     end
 end

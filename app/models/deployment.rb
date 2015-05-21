@@ -37,10 +37,6 @@ class Deployment < ActiveRecord::Base
 
   private
 
-    def deployment_params
-      params.require(:deployment).permit(:id, :version, :environment, :application, :application_id, :created_at)
-    end
-
     # Record the deployment to statsd and thence to graphite
     def record_to_statsd
       # Only record production deployments in production graphite
