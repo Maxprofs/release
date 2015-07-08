@@ -99,13 +99,13 @@
       <tr>
         <td><%= environment.humanize %></td>
         <td>
-          <%= github_tag_link_to(@application, deployment.version) %>
+          <%= link_to deployment.version, deployment_path(deployment) %>
           at
           <%= human_datetime(deployment.created_at) %>
         </td>
         <td>
           <% if deployment.previous_deployment %>
-            <%= github_tag_link_to(@application, deployment.previous_deployment.version) %>
+            <%= link_to deployment.previous_deployment.version, deployment_path(deployment.previous_deployment) %>
             at
             <%= human_datetime(deployment.previous_deployment.created_at) %>
           <% else %>
@@ -146,8 +146,7 @@
             <span class="label label-default"><%= deployment.environment %></span>
           <% end %>
         </td>
-        <td><%= github_tag_link_to(@application, deployment.version) %></td>
-        <td><%= link_to "x", deployment_path(deployment) %> </td>
+        <td><%= link_to deployment.version, deployment_path(deployment) %></td>
       </tr>
     <% end %>
     </tbody>
