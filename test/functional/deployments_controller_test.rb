@@ -25,6 +25,26 @@ class DeploymentsControllerTest < ActionController::TestCase
     end
   end
 
+  context "GET show" do
+    setup do
+      @application = FactoryGirl.create(:application, name: "Foo")
+      @deployment = FactoryGirl.create(:deployment, application_id: @application.id, created_at: Time.zone.now, version: 123)
+      @previous_deployment = FactoryGirl.create(:deployment, application_id: @application.id, created_at: 2.days.ago, version: 122)
+    end
+
+    should "render the show template" do
+      get :show, {id: @deployment.id}
+
+      assert_template "show"
+      assert response.ok?
+    end
+
+    should "assign deployments to the template" do
+      get :show, {id: @deployment.id}
+      assert response.ok?
+    end
+  end
+
   context "GET new" do
     context "when the user has no deploy permissions" do
       shared_test("actions_requiring_deploy_permission_redirect", 

@@ -1,0 +1,38 @@
+<% content_for :page_title, @application.name %>
+
+<div class="page-header">
+  <h1 class="remove-bottom-margin">
+    <span class="name">Deploy <%= @application.name %></span>
+    <span class="shortname">(<%= @application.shortname %>)</span>
+  </h1>
+  <%= link_to @application.repo_url, @application.repo_url, target: "_blank" %>
+</div>
+
+<main>
+  <h2>Deployment of <span class="label label-info"><%= @deployment.version %></span></h2>
+
+  <p class="lead add-top-margin">
+    To
+    <% if @deployment.production? %>
+      <span class="label label-danger"><%= @deployment.environment %></span>
+    <% else %>
+      <span class="label label-default"><%= @deployment.environment %></span>
+    <% end %>
+    At
+    <%= human_datetime(@deployment.created_at) %>
+  </p>
+
+  <p>Previous deployment was <%= link_to @previous_deployment.version, deployment_path(@previous_deployment) %> at <%= human_datetime(@previous_deployment.created_at) %></p>
+
+  <p>
+    <a class="btn btn-default" href="<%= @application.repo_compare_url(@previous_deployment.version, @deployment.version) %>">
+      <i class="glyphicon glyphicon-new-window add-right-margin"></i>Full Diff
+    </a>
+  </p>
+
+  <p>
+    <a class="btn btn-default" href="<%= @application.repo_tag_url(@deployment.version) %>">
+      <i class="glyphicon glyphicon-new-window add-right-margin"></i>Tag
+    </a>
+  </p>
+</main>

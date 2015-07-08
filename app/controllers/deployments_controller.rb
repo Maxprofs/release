@@ -12,6 +12,12 @@ class DeploymentsController < ApplicationController
                                  created_at: default_deploy_time)
   end
 
+  def show
+    @deployment = Deployment.find(params[:id])
+    @application = @deployment.application
+    @previous_deployment = @deployment.previous_deployment
+  end
+
   def create
     if push_notification?
       application = application_by_repo
