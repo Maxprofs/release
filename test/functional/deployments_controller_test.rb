@@ -30,6 +30,8 @@ class DeploymentsControllerTest < ActionController::TestCase
       @application = FactoryGirl.create(:application, name: "Foo")
       @deployment = FactoryGirl.create(:deployment, application_id: @application.id, created_at: Time.zone.now, version: 123)
       @previous_deployment = FactoryGirl.create(:deployment, application_id: @application.id, created_at: 2.days.ago, version: 122)
+
+      stub_request(:get, "https://api.github.com/repos/#{@application.repo}/compare/#{@previous_deployment.version}...#{@deployment.version}").to_return(body: {})
     end
 
     should "render the show template" do

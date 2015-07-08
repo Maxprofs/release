@@ -16,6 +16,22 @@ class DeploymentsController < ApplicationController
     @deployment = Deployment.find(params[:id])
     @application = @deployment.application
     @previous_deployment = @deployment.previous_deployment
+
+    comparison = github.compare(
+      @application.repo,
+      @previous_deployment.version,
+      @deployment.version
+    )
+    @commits = comparison.commits.reverse + [comparison.base_commit]
+
+    @github_available = true
+  rescue Octokit::NotFound => e
+    @github_available = false
+    @github_error = e
+  rescue Octokit::Error => e
+    Airbrake.notify(e)
+    @github_available = false
+    @github_error = e
   end
 
   def create
@@ -82,5 +98,10 @@ class DeploymentsController < ApplicationController
         :repo,
         :version,
       )
+    end
+
+    def github
+      credentials = defined?(GITHUB_CREDENTIALS) ? GITHUB_CREDENTIALS : {}
+      @client ||= Octokit::Client.new(credentials)
     end
 end

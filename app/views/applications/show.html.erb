@@ -147,6 +147,7 @@
           <% end %>
         </td>
         <td><%= github_tag_link_to(@application, deployment.version) %></td>
+        <td><%= link_to "x", deployment_path(deployment) %> </td>
       </tr>
     <% end %>
     </tbody>
