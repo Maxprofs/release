@@ -1,16 +1,18 @@
 development:
-  adapter: mysql2
+  adapter: postgresql
   encoding: utf8
   database: release_development
+  host: 
   pool: 5
   reconnect: true
   username: release
   password: release
 
 test:
-  adapter: mysql2
+  adapter: postgresql
   encoding: utf8
   database: release_test
+  host: 
   pool: 5
   reconnect: true
   username: release
