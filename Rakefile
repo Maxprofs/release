@@ -3,7 +3,7 @@
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
 require File.expand_path('../config/application', __FILE__)
-
+Dir.glob('lib/tasks/*.rake').each { |r| load r}
 require 'ci/reporter/rake/minitest' if Rails.env.test?
 
 ReleaseApp::Application.load_tasks

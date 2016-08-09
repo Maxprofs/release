@@ -17,3 +17,14 @@ test:
   reconnect: true
   username: release
   password: release
+
+production:
+  adapter: postgresql
+  encoding: utf8
+  host: rdsbroker-42118712-4261-48ba-a028-950ea3cc7ab2.c7uewwm9qebj.eu-west-1.rds.amazonaws.com
+  database: release_development
+  host: 
+  pool: 5
+  reconnect: true
+  username: rdsbroker_42118712_4261_48ba_a028_950ea3cc7ab2_owner
+  password: bmzKX89T6vjBAdDcvFU3LIFBKAa6WaJI

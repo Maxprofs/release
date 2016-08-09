@@ -1,0 +1,13 @@
+---
+applications:
+  env:
+   GOVUK_APP_DOMAIN: "assets.publishing.service.gov.uk"
+   GOVUK_ASSET_ROOT: "https://assets.publishing.service.gov.uk"
+   GOVUK_WEBSITE_ROOT: "https://www.gov.uk"
+   PLEK_SERVICE_STATIC_URI: "https://assets.publishing.service.gov.uk"
+   PLEK_SERVICE_CONTENTAPI_URI: "https://www.gov.uk/api"
+
+- name: govuk-release
+  services: 
+   - transition_production
+  buildpack: ruby_buildpack
