@@ -1,0 +1,23 @@
+version: '2'
+services:
+  release:
+    image: 'govuk/release:master'
+    ports: ["3036:3036"]
+    environment:
+      DATABASE_URL: "mysql2://release:password@mysql/release_production"
+    depends_on:
+      - "mysql"
+    links:
+      - "mysql"
+    volumes:
+      - .:/data
+  mysql:
+    image: 'mysql:5.5'
+    ports: ["3306:3306"]
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: release_production
+      MYSQL_USER: release
+      MYSQL_PASSWORD: release
+    volumes:
+      - .:/data
